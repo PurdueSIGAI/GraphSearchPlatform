@@ -60,7 +60,6 @@ public class Maze {
 				Tile tile = maze[y][x];
 				String result;
 				if (startX == tile.getX() && startY == tile.getY()) {
-					System.out.println(startX+"=="+tile.getX()+"&"+startY+"=="+tile.getY());
 					result = "ME";
 				} else if (tile.isGoal(goalX, goalY)) {
 					result = "GL";
