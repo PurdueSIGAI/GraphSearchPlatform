@@ -31,7 +31,7 @@ public class Main {
 		System.out.println();
 		System.out.println();
 		System.out.println();
-		//maze.printShortestPath(mode);
+		maze.printShortestPath(mode);
 	}
 
 	public static GraphSearchMode getGSM(String mode) {

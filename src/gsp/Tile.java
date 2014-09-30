@@ -4,12 +4,14 @@ public class Tile {
 
 	private int x, y, cost;
 	boolean visited;
+	private Tile parent;
 
 	public Tile(int x, int y, int cost) {
 		this.x = x;
 		this.y = y;
 		this.cost = cost;
 		this.visited = false;
+		this.setParent(null);
 	}
 
 	public int getX() {
@@ -24,6 +26,14 @@ public class Tile {
 		return cost;
 	}
 
+	public Tile getParent() {
+		return parent;
+	}
+
+	public void setParent(Tile parent) {
+		this.parent = parent;
+	}
+	
 	public boolean isTraversable() {
 		return cost > 0;
 	}
@@ -43,4 +53,5 @@ public class Tile {
 	public void visit() {
 		visited = true;
 	}
+
 }
