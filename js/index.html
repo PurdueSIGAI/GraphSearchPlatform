@@ -1,0 +1,31 @@
+<!DOCTYPE>
+<HTML>
+Height:<input type="Number" id="height" name="height" value="100" />&nbsp;
+Width:<input type="Number" id="width" name="width" value="100" /><br>
+<input type="radio" id="gsm" name="gsm" value="0" checked="checked">BFS&nbsp;
+<input type="radio" id="gsm" name="gsm" value="1">DFS&nbsp;
+<input type="radio" id="gsm" name="gsm" value="2">ASTAR<br>
+<button type="button" id="start" name="start" onclick="start()">Start!</button>
+<script src="Tile.js"></script>
+<script src="Maze.js"></script>
+<script type="text/javascript">
+    function getGSM(mode) {
+        return GraphSearchMode.values()[Integer.parseInt(mode)];
+    }
+
+    function start() {
+        mode = document.getElementById("gsm").value;
+        height = document.getElementById("height").value;
+        width = document.getElementById("width").value;
+        maze = new Maze(height, width);
+        maze.printMaze();
+        document.write("<br>");
+        document.write("<br>");
+        document.write("<br>");
+        document.write("<br>");
+        document.write("<br>");
+        maze.printShortestPath(mode);
+    }
+</script>
+
+</HTML>
