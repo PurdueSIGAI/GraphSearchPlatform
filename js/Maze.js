@@ -44,11 +44,14 @@ function Maze(height, width) {
 
     this.printMazeString = function(strMaze) {
         for (arr of strMaze) {
+			line="";
             for (str of arr) {
-                document.write(str);
+                line+=str;
             }
-            document.write("<br>");
+			line+="<br>"
+            document.getElementById("mazeOut").innerHTML+=line;
         }
+        document.getElementById("mazeOut").innerHTML+="<br><br><br>";
     }
 
     this.getStringMaze = function() {

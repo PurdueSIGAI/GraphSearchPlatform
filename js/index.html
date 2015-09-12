@@ -6,6 +6,7 @@ Width:<input type="Number" id="width" name="width" value="100" /><br>
 <input type="radio" id="gsm" name="gsm" value="1">DFS&nbsp;
 <input type="radio" id="gsm" name="gsm" value="2">ASTAR<br>
 <button type="button" id="start" name="start" onclick="start()">Start!</button>
+<div name="mazeOut" id="mazeOut"></div>
 <script src="Tile.js"></script>
 <script src="Maze.js"></script>
 <script type="text/javascript">
@@ -14,16 +15,12 @@ Width:<input type="Number" id="width" name="width" value="100" /><br>
     }
 
     function start() {
+        document.getElementById("mazeOut").innerHTML="";
         mode = document.getElementById("gsm").value;
         height = document.getElementById("height").value;
         width = document.getElementById("width").value;
         maze = new Maze(height, width);
         maze.printMaze();
-        document.write("<br>");
-        document.write("<br>");
-        document.write("<br>");
-        document.write("<br>");
-        document.write("<br>");
         maze.printShortestPath(mode);
     }
 </script>
