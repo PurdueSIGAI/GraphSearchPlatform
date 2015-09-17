@@ -1,10 +1,19 @@
-<!DOCTYPE>
-<HTML>
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		body {
+			font-family: "Courier New", monospace;
+		}
+	</style>
+</head>
+<body>
+<h1>Maze Project</h1>
 Height:<input type="Number" id="height" name="height" value="100" />&nbsp;
 Width:<input type="Number" id="width" name="width" value="100" /><br>
-<input type="radio" id="gsm" name="gsm" value="0" checked="checked">BFS&nbsp;
-<input type="radio" id="gsm" name="gsm" value="1">DFS&nbsp;
-<input type="radio" id="gsm" name="gsm" value="2">ASTAR<br>
+<input type="radio" id="bfs" name="gsm" value="0" checked="checked">BFS&nbsp;
+<input type="radio" id="dfs" name="gsm" value="1">DFS&nbsp;
+<input type="radio" id="astar" name="gsm" value="2">ASTAR<br>
 <button type="button" id="start" name="start" onclick="start()">Start!</button>
 <div name="mazeOut" id="mazeOut"></div>
 <script src="Tile.js"></script>
@@ -16,13 +25,21 @@ Width:<input type="Number" id="width" name="width" value="100" /><br>
 
     function start() {
         document.getElementById("mazeOut").innerHTML="";
-        mode = document.getElementById("gsm").value;
-        height = document.getElementById("height").value;
-        width = document.getElementById("width").value;
-        maze = new Maze(height, width);
+		var mode = 0;
+		if (document.getElementById("dfs").checked == true)
+			mode = 1;
+		else if (document.getElementById("bfs").checked == true)
+			mode = 0;
+		else if (document.getElementById("astar").checked == true)
+			mode = 2;
+       // var mode = document.getElementById("gsm").value;
+        var height = document.getElementById("height").value;
+        var width = document.getElementById("width").value;
+        var maze = new Maze(height, width);
         maze.printMaze();
         maze.printShortestPath(mode);
     }
 </script>
 
-</HTML>
+</body>
+</html>

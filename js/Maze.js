@@ -8,14 +8,14 @@ function Maze(height, width) {
     this.height = parseInt(height);
     this.width = parseInt(width);
     this.maze = [];
-    for (y = 0; y < height; y++) {
+    for (var y = 0; y < height; y++) {
         this.maze[y] = [];
     }
     for (y = 0; y < this.height; y++) {
-        for (x = 0; x < this.width; x++) {
-            traversable = Math.random() > .1 ? 1 : -1;
+        for (var x = 0; x < this.width; x++) {
+            var traversable = Math.random() > 0.1 ? 1 : -1;
             // int cost = (int) (traversable * Math.random() * 10.0);
-            cost = traversable;
+            var cost = traversable;
             this.maze[y][x] = new Tile(x, y, cost);
         }
     }
@@ -33,42 +33,45 @@ function Maze(height, width) {
     this.maze[this.startY][this.startX] = new Tile(this.startX, this.startY, 1);
 
     this.getTile = function(x, y) {
-        if (x < width && x >= 0 && y < height && y >= 0)
+        if (x < width && x >= 0 && y < height && y >= 0) {
             return this.maze[y][x];
+		}
         return null;
-    }
+    };
 
     this.printMaze = function() {
         this.printMazeString(this.getStringMaze());
-    }
+    };
 
     this.printMazeString = function(strMaze) {
-        for (arr of strMaze) {
-			line="";
-            for (str of arr) {
+        for (var i = 0; i < strMaze.length; i++) {
+			var arr = strMaze[i];
+			var line="";
+            for (var j = 0; j < arr.length; j++) {
+				var str = arr[j];
                 line+=str;
             }
-			line+="<br>"
+			line+="<br>";
             document.getElementById("mazeOut").innerHTML+=line;
         }
-        document.getElementById("mazeOut").innerHTML+="<br><br><br>";
-    }
+        document.getElementById("mazeOut").innerHTML+="<br><br><hr><br><br>";
+    };
 
     this.getStringMaze = function() {
-        strMaze = [];
-	    for (y = 0; y < height; y++) {
+        var strMaze = [];
+	    for (var y = 0; y < height; y++) {
     	    strMaze[y] = [];
 	    }
         for (y = 0; y < height; y++) {
-            for (x = 0; x < width; x++) {
-                tile = this.maze[y][x];
-                result = "";
-                if (this.startX == tile.x && this.startY == tile.y) {
-                    result = "S";
+            for (var x = 0; x < width; x++) {
+                var tile = this.maze[y][x];
+                var result = "";
+                if (this.startX === tile.x && this.startY === tile.y) {
+                    result = '<font color="green">S</font>';
                 } else if (tile.isGoal(this.goalX, this.goalY)) {
-                    result = "E";
+                    result = '<font color="red">E</font>';
                 } else if (tile.isTraversable()) {
-                    result = "[]";
+                    result = '<font color="white">[</font>';
                 } else {
                     result = "X";
                 }
@@ -76,39 +79,44 @@ function Maze(height, width) {
             }
         }
         return strMaze;
-    }
+    };
 
     this.printShortestPath = function(mode) {
-        path = this.calculateShortestPath(mode);
-        strMaze = this.getStringMaze();
-        if (path != null) {
-	        for (tile of path) {
-    	        strMaze[tile.y][tile.x] = "V";
+        var path = this.calculateShortestPath(mode);
+        var strMaze = this.getStringMaze();
+        if (path !== null) {
+	        for (var i = 0; i < path.length; i++) {
+				var tile = path[i];
+    	        strMaze[tile.y][tile.x] = '<font color="red">V</font>';
     	    }
 		}
         this.printMazeString(strMaze);
-    }
+    };
 
     this.getAdjacentTiles = function(tile) {
-        return getAdjacentTilesXY(tile.x, tile.y);
-    }
+        return this.getAdjacentTilesXY(tile.x, tile.y);
+    };
 
     this.getAdjacentTilesXY = function(x, y) {
-        adjTiles = new Array();
-        up = getTile(x, y + 1);
-        if (up != null)
+        var adjTiles = [];
+        var up = this.getTile(x, y + 1);
+        if (up !== null) {
             adjTiles.push(up);
-        down = getTile(x, y - 1);
-        if (down != null)
+		}
+		var down = this.getTile(x, y - 1);
+        if (down !== null) {
             adjTiles.push(down);
-        left = getTile(x - 1, y);
-        if (left != null)
+		}
+		var left = this.getTile(x - 1, y);
+        if (left !== null) {
             adjTiles.push(left);
-        right = getTile(x + 1, y);
-        if (right != null)
+		}
+        var right = this.getTile(x + 1, y);
+        if (right !== null) {
             adjTiles.push(right);
+		}
         return adjTiles;
-    }
+    };
 
     this.calculateShortestPath = function(mode) {
         switch (mode) {
@@ -119,20 +127,16 @@ function Maze(height, width) {
             default:
                 return this.calculateBFS();
         }
-    }
-
-    this.calculateBFS = function() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    };
 
     this.calculateDFS = function() {
-        // TODO Auto-generated method stub
         return null;
-    }
+    };
 
-    this.calculateAStar = function() {
-        // TODO Auto-generated method stub
+    this.calculateBFS = function() {
         return null;
-    }
+    };
+    this.calculateAStar = function() {
+        return null;
+    };
 }
