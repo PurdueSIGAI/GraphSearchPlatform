@@ -128,15 +128,143 @@ function Maze(height, width) {
                 return this.calculateBFS();
         }
     };
+	
+	// ********************************************
+	// ********** SOLUTION STARTS HERE ************
+	// ********************************************
+	
+	// DFS
+	
+	this.dfsHelper = function(dfsPath, currentTile) {
+		dfsPath.push(currentTile);
+		if (currentTile.x === this.goalX && currentTile.y === this.goalY) { // If we are at the goal...
+			return dfsPath;
+		} else {
+			var adjacent = this.getAdjacentTilesXY(currentTile.x, currentTile.y);
+			for (var i = 0; i < adjacent.length; i++) {
+				if (adjacent[i].visited !== true && adjacent[i].isTraversable()) {
+					adjacent[i].visit();
+					var r = this.dfsHelper(dfsPath, adjacent[i]);
+					if (r !== null) {
+						return r;
+					}	
+				}
+			}
+			dfsPath.splice(dfsPath.length - 1, 1);
+			return null;
+		}
+	};
 
     this.calculateDFS = function() {
-        return null;
+        var dfsPath = [];
+		var currentTile = this.getTile(this.startX, this.startY);
+		return this.dfsHelper(dfsPath, currentTile);		
     };
+	
+	// BFS
+	
+	this.copyArray = function(array) {
+		return array.slice();
+	};
 
     this.calculateBFS = function() {
+		// Get the processing list setup
+		var first = {
+			tile:this.getTile(this.startX,this.startY),
+			list:[this.getTile(this.startX,this.startY)],
+		};
+        var processingList = [];
+		processingList.push(first);
+		
+		while (processingList.length !== 0) { // while processing list is not empty
+			// pop from processing list
+			var current = processingList[0];
+			processingList.splice(0,1);	
+			
+			// Loop through each of the adjacent tiles
+			var adjacent = this.getAdjacentTilesXY(current.tile.x, current.tile.y);
+			for (var i = 0; i < adjacent.length; i++) {
+				
+				// If the file should be used...
+				if (adjacent[i].visited !== true && adjacent[i].isTraversable()) {
+					adjacent[i].visit(); // visit it...
+					// Createa  new list...
+					var newList = this.copyArray(current.list);
+					newList.push(adjacent[i]);
+					// check if we are at the finish ....
+					if (adjacent[i].x === this.goalX && adjacent[i].y === this.goalY) {
+						return newList;
+					}
+					// Otherwise, add it to the processing list
+					var addTo = {
+						tile:adjacent[i],
+						list:newList
+					};
+					processingList.push(addTo);
+				}
+			}
+		}
+        
+        // There is no path
         return null;
     };
+	
+	// A-Star
+	
+	this.g = function(obj) {
+		return obj.list.length - 1;
+	};
+	
+	this.h = function(obj) {
+		return Math.sqrt(Math.pow((obj.tile.x - this.goalX), 2) + Math.pow(obj.tile.y - this.goalY, 2));
+	};
+	
+	this.f = function(obj){
+		return this.g(obj) + this.h(obj);
+	};
+
+	
+	// Same as BFS except for what's noted by comments
+	
     this.calculateAStar = function() {
+		var first = {
+			tile:this.getTile(this.startX,this.startY),
+			list:[this.getTile(this.startX,this.startY)],
+		};
+		first.tile.visit();
+        var processingList = [];
+		processingList.push(first);
+		while (processingList.length !== 0) {
+			
+			// Begin of difference
+			var current = processingList[0];
+			var remove = 0; // index to remove
+			for (var j = 1; j < processingList.length; j++) {
+				if (this.f(current) > this.f(processingList[j])) {
+					current = processingList[j];
+					remove = j;
+				}
+			}
+			processingList.splice(remove,1);
+			// End of difference
+			
+			var adjacent = this.getAdjacentTilesXY(current.tile.x, current.tile.y);
+			for (var i = 0; i < adjacent.length; i++) {
+				if (adjacent[i].visited !== true && adjacent[i].isTraversable()) {
+					adjacent[i].visit();
+					var newList = this.copyArray(current.list);
+					newList.push(adjacent[i]);
+					if (adjacent[i].x === this.goalX && adjacent[i].y === this.goalY) {
+						return newList;
+					}
+					var addTo = {
+						tile:adjacent[i],
+						list:newList
+					};
+					processingList.push(addTo);
+				}
+			}
+		}
         return null;
     };
 }
