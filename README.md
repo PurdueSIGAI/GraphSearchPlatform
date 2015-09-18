@@ -33,7 +33,7 @@ Another useful function (in the Maze.js file) is this.getAdjacentTiles (defined 
 You can test your implementation by opening the index.html file in a web browser, choosing the algorithm you wish to check, and pressing "Start!" 
 
 ## When you're done
-When you're done, execute the following code, where <login> is your Purdue login. Note:Cannot contain spaces.
+When you're done, execute the following code, where "<login>" is your Purdue login. Note:Cannot contain spaces.
 ```
 git checkout -b <login> # Makes a new branch, called your login
 git git add . # Adds all changes
