@@ -2,6 +2,8 @@ GraphSearchPlatform
 ===================
 This is an exercise in graph searching, used by SIGART in both Fall2014 and Fall2015.
 
+MIT Source for Graph Searching: http://web.mit.edu/eranki/www/tutorials/search/
+
 ## Getting Started
 Open up the terminal, and navigate to the directory you want to save the repository to. If you're not sure what to do, enter the following commands:
 ```
