@@ -130,11 +130,79 @@ function Maze(height, width) {
     };
 
     this.calculateDFS = function() {
-    	// TODO
-        return null;
+    	var path = [];
+	var startingTile = this.getTile(this.startX, this.startY);
+	startingTile.parent = null;
+	var goalTile = this.getTile(this.goalX, this.goalY);
+	var unvisited = [];
+	unvisited.unshift(startingTile);
+
+	while (unvisited.length > 0) {
+            var currentTile = unvisited.shift();
+	    if (currentTile.isGoal()) {
+	        break;
+	    }
+            if (!currentTile.isTraversable() || currentTile.visited) {
+	        continue;
+	    }
+	    currentTile.visit();
+
+	    var adjacent = this.getAdjacentTiles(currentTile);
+	    for (var i = 0; i < adjacent.length; i++) {
+	        if (!adjacent[i].visited) {
+	            adjacent[i].parent = currentTile;
+		    unvisited.unshift(adjacent[i]);
+		}
+	    }
+	}
+	console.log("Found one");
+
+	// We have a path?
+	var currentTile = goalTile.parent;
+	while (currentTile.hasParent()) {
+            path.unshift(currentTile);
+	    currentTile = currentTile.parent;
+	}
+
+        return path;
     };
 
     this.calculateBFS = function() {
+        var path = [];
+	var startingTile = this.getTile(this.startX, this.startY);
+	startingTile.parent = null;
+	var goalTile = this.getTile(this.goalX, this.goalY);
+	var unvisited = [];
+	unvisited.unshift(startingTile);
+
+	while (unvisited.length > 0) {
+            var currentTile = unvisited.pop();
+	    if (currentTile.isGoal()) {
+	        break;
+	    }
+            if (!currentTile.isTraversable() || currentTile.visited) {
+	        continue;
+	    }
+	    currentTile.visit();
+
+	    var adjacent = this.getAdjacentTiles(currentTile);
+	    for (var i = 0; i < adjacent.length; i++) {
+	        if (!adjacent[i].visited) {
+	            adjacent[i].parent = currentTile;
+		    unvisited.unshift(adjacent[i]);
+		}
+	    }
+	}
+	console.log("Found one");
+
+	// We have a path?
+	var currentTile = goalTile.parent;
+	while (currentTile.hasParent()) {
+            path.unshift(currentTile);
+	    currentTile = currentTile.parent;
+	}
+
+        return path;
     	// TODO
         return null;
     };
