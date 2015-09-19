@@ -34,6 +34,8 @@ You can test your implementation by opening the index.html file in a web browser
 
 ## When you're done
 When you're done, execute the following code, where "login" is your Purdue login. Note:Cannot contain spaces.
+
+**Important:** Do not just run the following code. In the first command, and the last command, change "login" to *your* Purdue login.
 ```
 git checkout -b login # Makes a new branch, called your login
 git git add . # Adds all changes
