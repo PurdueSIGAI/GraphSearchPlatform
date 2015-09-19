@@ -41,3 +41,21 @@ git commit -m "Implemented algorithms" # Commits these changes to the local repo
 git push origin login # Pushes commits from the local repository to the remote
 ```
 You should now see your solution on github as a new branch.
+
+## A Note on Debugging
+Your code will very likely not work when you run it the first time. Using a debugger can help you step through your code, line by line, analyzing the state of all variables in an effort to locate an error in your program.
+
+In Google Chrome, first open the developer tools by pressing the options button > More Tools > Developer Tools
+
+![]
+(https://raw.githubusercontent.com/PurdueSIGART/GraphSearchPlatform/master/pics/openDeveloperTools.png)
+
+Then select the "source" tab to open the debugger.
+
+![]
+(https://github.com/PurdueSIGART/GraphSearchPlatform/blob/master/pics/openDebugger.png?raw=true)
+
+The debugger should open. In the middle you will see your source code (including the line that the debugger is currently at, if JavaScript code is currently being run). Click on a line number to set a breakpoint. On the right side you should see something similar to below, where you can see all of the variables in their various contexts, as well as a few buttons: Pause/Continue until you get to a breakpoint, step over (simply goes to the next line in the current function), step into (goes into the function being called by this line of code, if you wrote it), and step out (continues until the function returns).
+
+![]
+(https://github.com/PurdueSIGART/GraphSearchPlatform/blob/master/pics/debugger.png?raw=true)
