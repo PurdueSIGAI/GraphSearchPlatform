@@ -130,13 +130,16 @@ function Maze(height, width) {
     };
 
     this.calculateDFS = function() {
+    	// TODO
         return null;
     };
 
     this.calculateBFS = function() {
+    	// TODO
         return null;
     };
     this.calculateAStar = function() {
+    	// TODO
         return null;
     };
 }
