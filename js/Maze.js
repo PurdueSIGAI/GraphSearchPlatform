@@ -131,7 +131,38 @@ function Maze(height, width) {
 
     this.calculateDFS = function() {
     	// TODO
-        return null;
+        var list = [];
+        var countOfTraversability;
+        var parent = this.getTile(this.startX, this.startY);
+        if (parent.isTraversable) {
+            list.push(parent);
+            parent.visit;
+        }
+        do {
+            var successor = this.getAdjacentTiles(parent);
+            for (i = 0; i < successor.length; i++) {
+                var currentTile = successor[i];
+                if (currentTile.isTraversable) {
+                    list.push(currentTile);
+                    currentTile.visit;
+                    if (currentTile.x == this.goalX && currentTile.y == this.goalY) {
+                        break;
+                    }
+                    else {
+                        parent = currentTile;
+                    }
+                }
+                else {
+                    countOfTraversability += 1;
+                }
+            }
+            if (countOfTraversability == successor.length) {
+                list.splice(list.length - 1, 1);
+                parent = list[list.length - 1];
+            }
+        }
+        while (!parent == null);
+        return list;
     };
 
     this.calculateBFS = function() {
