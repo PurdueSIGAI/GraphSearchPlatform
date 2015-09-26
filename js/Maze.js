@@ -129,48 +129,101 @@ function Maze(height, width) {
         }
     };
 
+    this.DFSHelper = function(tile, path) {
+        if (tile.x === this.goalX && tile.goalY === this.goalY) { // basis case (tile is the goal)
+            return path;// return the path
+        } else { // recursive case 
+            path.push(tile);
+            var successor = this.getAdjacentTiles(tile);
+            for (var i = 0; i < successor.length; i++) {// loop through each tile adjacent tile
+                if (successor[i].isTraversable() && successor[i].visited === false) {// if this adjacent tile is both traversable and not visited
+                    successor[i].visit();// visit the tile
+                    // add the tile to path
+                    var newPath = this.DFSHelper(successor[i], path);// calculate dfs on that tile (use this.DFSHelper)
+                    if (newPath !== null) {// if dfs returns something non-null
+                        return newPath;// return what dfs returns
+                    }
+                }
+            }
+            path.splice(path.length - 1, 1);// remove last tile from the path
+            return null;// return null
+        }
+    }
+
     this.calculateDFS = function() {
+        return this.DFSHelper(this.getTile(this.startX, this.startY), [])
     	// TODO
-        var list = [];
-        var countOfTraversability;
-        var parent = this.getTile(this.startX, this.startY);
-        if (parent.isTraversable) {
-            list.push(parent);
-            parent.visit;
-        }
-        do {
-            var successor = this.getAdjacentTiles(parent);
-            for (i = 0; i < successor.length; i++) {
-                var currentTile = successor[i];
-                if (currentTile.isTraversable) {
-                    list.push(currentTile);
-                    currentTile.visit;
-                    if (currentTile.x == this.goalX && currentTile.y == this.goalY) {
-                        break;
-                    }
-                    else {
-                        parent = currentTile;
-                    }
-                }
-                else {
-                    countOfTraversability += 1;
-                }
-            }
-            if (countOfTraversability == successor.length) {
-                list.splice(list.length - 1, 1);
-                parent = list[list.length - 1];
-            }
-        }
-        while (!parent == null);
-        return list;
+        // var list = [];
+        // var countOfTraversability = 0;
+        // var parent = this.getTile(this.startX, this.startY);
+        // if (parent.isTraversable() && parent.visited == false) {
+        //     list.push(parent);
+        //     parent.visit();
+        // }
+        // while (parent != null){
+        //     var successor = this.getAdjacentTiles(parent);
+        //     for (i = 0; i < successor.length; i++) {
+        //         var currentTile = successor[i];
+        //         if (currentTile.isTraversable()) {
+        //             if (currentTile.visited == false) {
+        //                 list.push(currentTile);
+        //                 currentTile.visit();
+        //                 if (currentTile.x == this.goalX && currentTile.y == this.goalY) {
+        //                     break;
+        //                 }
+        //                 else {
+        //                     parent = currentTile;
+        //                     break;
+        //                 }
+        //             }
+        //             else {
+        //                 countOfTraversability += 1;
+        //             }
+        //         }
+        //     }
+        //     if (countOfTraversability == successor.length) {
+        //         list.splice(list.length - 1, 1);
+        //         parent = list[list.length - 1];
+        //     }
+        // }
+        // return list;
     };
 
     this.calculateBFS = function() {
     	// TODO
-        return null;
+        var list = [];
+        var startingPoint = this.getTile(this.startX, this.startY);
+        list.push(startingPoint);
+        while (list.length > 0) {
+            var item = list.shift();
+            item.visit();
+            var successor = this.getAdjacentTiles(item);
+            for (var i = 0; i < successor.length; i++) {
+                if (successor[i].isTraversable() && successor[i].visited == false) {
+                    successor[i].setParent(item);
+                    if (successor[i].x == this.goalX && successor[i].y == this.goalY) {
+                        break;
+                    }
+                    else {
+                        list.push(successor[i]);
+                    }
+                }
+            }
+        }
+        var path = [];
+        var currentTile = this.getTile(this.goalX, this.goalY);
+        while (currentTile != null) {
+            path.push(currentTile);
+            currentTile = currentTile.parent;
+        }
+        return path;
     };
     this.calculateAStar = function() {
     	// TODO
         return null;
     };
+
+    // this.parent = function(tile, path) {
+
+    // };
 }

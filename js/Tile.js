@@ -3,6 +3,7 @@ function Tile(x, y, cost) {
     this.y = y;
     this.cost = cost;
     this.visited = false;
+    this.parent = null;
 
     this.isTraversable = function() {
         return this.cost > 0;
@@ -14,5 +15,10 @@ function Tile(x, y, cost) {
 
     this.visit = function() {
         this.visited = true;
+    };
+
+    this.setParent = function(parent) {
+        this.parent = parent;
+
     };
 }
